@@ -1,4 +1,5 @@
-from socket import AF_INET, SOCK_DGRAM, socket
+from socket import AF_INET, SO_BROADCAST, SOCK_DGRAM, socket
+from ssl import SOL_SOCKET
 
 BUFFER_SIZE = 1024
 
@@ -10,10 +11,11 @@ PORT = 5000
 # possibilità
 # localhost 127.0.0.1
 
-def chatServer():
+def chatServer(host, port):
     running = True
     with socket (AF_INET, SOCK_DGRAM) as s:
-        s.bind((HOST, PORT))
+        s.bind((host, port))
+        # s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1) LINUX E MACOS
         print('In ascolto')
         while running == True:
             msg = s.recvfrom(BUFFER_SIZE)
@@ -21,4 +23,4 @@ def chatServer():
             print(msg)
 
 if __name__ == "__main__":
-    chatServer()
+    chatServer(HOST, PORT)
