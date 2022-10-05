@@ -1,6 +1,5 @@
 from socket import AF_INET, SO_BROADCAST, SOCK_DGRAM, socket
 from ssl import SOL_SOCKET
-from packet import *
 
 BUFFER_SIZE = 1024
 
@@ -20,14 +19,8 @@ def chatServer(host, port):
         print('In ascolto')
         while running == True:
             msg = s.recvfrom(BUFFER_SIZE)
-            p = Packet.from_bytes(msg[0])
-            #msg = msg[0].decode()
-            us = str(p.username)
-            ms = str(p.message)
-            us = "".join(us)
-            ms = "".join(ms)
-            m = "[" + us + "] " + ms
-            print(m)
+            msg = msg[0].decode()
+            print(msg)
 
 if __name__ == "__main__":
     chatServer(HOST, PORT)
