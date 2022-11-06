@@ -13,15 +13,28 @@ def chatClient(ip, port):
     with socket(AF_INET, SOCK_DGRAM) as s:
         f = open("Pdf_prova.pdf", "rb")
         buffer = f.read()
+        #print(buffer)
         n = 0
+
+        data = True
+
+        """while data:
+            data = f.read(4096)
+            print(data)
+            if data:
+                s.sendto(data.encode('utf-8'), (ip, port))
+        s.sendto(b'', (ip, port))
+        f.close()"""
         try:
-            while buffer[n * 4096 + 4095]:
+            while buffer[(n * 4096) + 4095]:
                 m = buffer[n * 4096: n * 4096 + 4095]
                 s.sendto(m, (ip, port))
                 n += 1
         except:
+            n += 1
             m = buffer[n * 4096:]
         s.sendto(m, (ip, port))
+        f.close()
       
 
 if __name__ == "__main__":
